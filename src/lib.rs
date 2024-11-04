@@ -102,6 +102,9 @@ fn has_json_attr(field: &Field) -> bool {
 
 #[proc_macro_derive(ToJson, attributes(json))]
 pub fn to_json_derive(input: TokenStream) -> TokenStream {
+    pub use bson;
+    pub use indexmap::IndexMap;
+
     let input = parse_macro_input!(input as DeriveInput);
     let name = &input.ident;
 
