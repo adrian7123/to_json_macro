@@ -1,0 +1,11 @@
+[alias]
+t = "test -- --nocapture"
+
+[build]
+rustflags = ["-Z", "threads=40"]
+
+[run]
+rustflags = ["-Z", "threads=40"]
+
+[test]
+rustflags = ["-Z", "threads=40"]
