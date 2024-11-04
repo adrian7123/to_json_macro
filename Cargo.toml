@@ -2,8 +2,10 @@
 name = "to_json_macro"
 version = "0.1.0"
 edition = "2021"
+repository = "https://github.com/adrian7123/to_json_macro"
 
 [lib]
+name = "to_json_macro"
 proc-macro = true
 
 [dependencies]
