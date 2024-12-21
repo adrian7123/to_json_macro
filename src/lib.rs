@@ -249,8 +249,8 @@ pub fn to_json_derive(input: TokenStream) -> TokenStream {
             });
 
             quote! {
-                impl to_json_impl::ToJson for #name {
-                     fn to_json_string(&self) -> String {
+                impl  #name {
+                    pub fn to_json_string(&self) -> String {
                         use serde_json::json;
                         use mongodb::bson::oid::ObjectId;
                         use std::collections::HashMap;
@@ -273,7 +273,7 @@ pub fn to_json_derive(input: TokenStream) -> TokenStream {
 
                         serde_json::to_string(&ordered_map).expect("Failed to serialize to JSON")
                     }
-                     fn to_json(&self) -> serde_json::Value {
+                   pub  fn to_json(&self) -> serde_json::Value {
                         serde_json::from_str(&self.to_json_string()).expect("Failed to deserialize from JSON")
                     }
                 }
@@ -287,11 +287,14 @@ pub fn to_json_derive(input: TokenStream) -> TokenStream {
         }
         Data::Enum(_) => {
             quote! {
-                impl to_json_impl::ToJson for #name {
-                    fn to_json_string(&self) -> String {
+                impl  #name {
+                  pub  fn get_string(&self) -> String {
+                        self.to_json_string().replace("\"", "")
+                    }
+                  pub  fn to_json_string(&self) -> String {
                         serde_json::to_string(self).expect("Failed to serialize to JSON")
                     }
-                    fn to_json(&self) -> serde_json::Value {
+                  pub  fn to_json(&self) -> serde_json::Value {
                         serde_json::from_str(&self.to_json_string()).expect("Failed to deserialize from JSON")
                     }
                 }
