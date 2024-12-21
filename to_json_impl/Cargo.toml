@@ -1,0 +1,10 @@
+[package]
+name = "to_json_impl"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "to_json_impl"
+
+[dependencies]
+serde_json = "1.0.70"

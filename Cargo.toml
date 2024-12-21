@@ -9,6 +9,8 @@ name = "to_json_macro"
 proc-macro = true
 
 [dependencies]
+to_json_impl = { path = "./to_json_impl" }
+
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 syn = { version = "1.0", features = ["derive"] }

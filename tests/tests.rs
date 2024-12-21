@@ -1,6 +1,7 @@
 #[cfg(test)]
 mod tests {
     use serde_json::json;
+    use to_json_impl::ToJson;
     use to_json_macro::ToJson;
 
     use bson::{oid::ObjectId, DateTime};
@@ -19,7 +20,7 @@ mod tests {
     #[derive(ToJson, Serialize, Clone)]
     struct MyStruct {
         #[serde(rename = "_id")]
-        id: ObjectId,
+        _id: ObjectId,
         #[serde(rename = "testId")]
         test_id: Option<ObjectId>,
         #[serde(rename = "testId2")]
@@ -66,7 +67,7 @@ mod tests {
     fn test_to_json() {
         let my_struct = MyStruct {
             vec_object_id: vec![ObjectId::new(), ObjectId::new()],
-            id: ObjectId::new(),
+            _id: ObjectId::new(),
             name: "test".to_string(),
             value: 42,
             date_time: DateTime::now(),
@@ -105,7 +106,7 @@ mod tests {
 
         let json_value = my_struct.to_json();
 
-        assert_eq!(json_value["_id"], json!(my_struct.id.to_string()));
+        assert_eq!(json_value["_id"], json!(my_struct._id.to_string()));
         assert_eq!(json_value["name"], json!(my_struct.name));
         assert_eq!(json_value["value"], json!(my_struct.value));
     }
