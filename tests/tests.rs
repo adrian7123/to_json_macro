@@ -1,23 +1,22 @@
 #[cfg(test)]
 mod tests {
+    use serde::{Deserialize, Serialize};
     use serde_json::json;
-    use to_json_impl::ToJson;
     use to_json_macro::ToJson;
 
     use bson::{oid::ObjectId, DateTime};
-    use serde::{Deserialize, Serialize};
 
     #[derive(Clone, ToJson, Serialize, Deserialize)]
+    #[serde(rename_all = "camelCase")]
     struct Test {
         id: ObjectId,
         name: String,
-        #[serde(rename = "createdAt")]
         pub created_at: DateTime,
-        #[serde(rename = "updatedAt")]
         pub updated_at: DateTime,
     }
 
-    #[derive(ToJson, Serialize, Clone)]
+    #[derive(ToJson, Serialize, Clone, Deserialize)]
+    #[serde(rename_all = "camelCase")]
     struct MyStruct {
         #[serde(rename = "_id")]
         _id: ObjectId,
@@ -43,11 +42,11 @@ mod tests {
         vec_object_id: Vec<ObjectId>,
     }
 
-    #[derive(ToJson, Serialize, Clone)]
+    #[derive(ToJson, Serialize, Clone, Deserialize)]
+    #[serde(rename_all = "camelCase")]
     struct Two {
         #[serde(rename = "_id")]
         id: ObjectId,
-        #[serde(rename = "testId2")]
         test_id2: Option<ObjectId>,
         #[json]
         pub register_status: Option<RegisterStatus>,
@@ -55,7 +54,7 @@ mod tests {
         pub register_status2: Option<RegisterStatus>,
     }
 
-    #[derive(ToJson, Serialize, Clone)]
+    #[derive(ToJson, Serialize, Clone, Deserialize)]
     #[serde(rename_all = "lowercase")]
     #[allow(dead_code)]
     enum RegisterStatus {
